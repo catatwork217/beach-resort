@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Mount Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .code {
+            background: #282c34;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        .success {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .error {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        h1 { color: #61dafb; }
+        h2 { color: #2c3e50; }
+    </style>
+</head>
+<body>
+    <h1>🔍 React Mount Test</h1>
+    
+    <div class="test-section">
+        <h2>📋 Issue: Blank White Page</h2>
+        <p>The blank white page typically means:</p>
+        <ol>
+            <li>React app failed to mount to <code>div#root</code></li>
+            <li>JavaScript bundle has an error</li>
+            <li>Browser console shows errors</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 Quick Test</h2>
+        <p>Let's verify if React can mount at all. Create a minimal test:</p>
+        
+        <h3>Step 1: Create a minimal App.js</h3>
+        <div class="code">
+// Backup your current App.js first
+cp src/App.js src/App.js.backup
+
+// Then replace with this minimal version:
+import React from 'react';
+import './App.css';
+
+function App() {
+  return (
+    <div className="test-page">
+      <h1>React is Working!</h1>
+      <p>If you see this, React is mounting correctly.</p>
+    </div>
+  );
+}
+
+export default App;
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 Common Causes</h2>
+        
+        <h3>1. React Version Mismatch</h3>
+        <p class="error">You have React 19.2.7 with react-scripts 5.0.1</p>
+        <p>react-scripts 5 expects React 17 or 18, not 19.</p>
+        <p><strong>Fix:</strong> Downgrade React or upgrade react-scripts</p>
+        <div class="code">
+# Option 1: Downgrade React (recommended)
+npm install react@18.2.0 react-dom@18.2.0
+
+# Option 2: Upgrade react-scripts (may require more changes)
+npm install react-scripts@latest
+        </div>
+
+        <h3>2. CSS Not Loading</h3>
+        <p>Check if <code>import './App.css'</code> is uncommented in App.js</p>
+        <p><strong>Current status:</strong> ✅ CSS is imported</p>
+
+        <h3>3. JavaScript Error in Component</h3>
+        <p>Check browser console for errors in:</p>
+        <ul>
+            <li>Home.js</li>
+            <li>Rooms.js</li>
+            <li>SingleRoom.js</li>
+        </ul>
+        <p>Common errors: undefined variables, null references</p>
+    </div>
+
+    <div class="test-section">
+        <h2>🚀 Recommended Fixes</h2>
+        
+        <h3>Fix 1: Downgrade React (Quickest Solution)</h3>
+        <div class="code">
+cd /home/catwoman/beach-resort
+npm install react@18.2.0 react-dom@18.2.0
+npm start
+        </div>
+
+        <h3>Fix 2: Check for Null References</h3>
+        <p>In Home.js, change:</p>
+        <div class="code">
+// Before (might crash if heroImage is null)
+{home.heroImage && (
+  <div style={{ backgroundImage: `url(${home.heroImage.fields.file.url})` }}>
+)};
+
+// After (safer)
+{home?.heroImage?.fields?.file?.url && (
+  <div style={{ backgroundImage: `url(${home.heroImage.fields.file.url})` }}>
+)}
+        </div>
+
+        <h3>Fix 3: Add Error Boundaries</h3>
+        <p>Wrap your app in error boundaries to catch errors:</p>
+        <div class="code">
+// In index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+class ErrorBoundary extends React.Component {
+  state = { hasError: false };
+  
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+  
+  componentDidCatch(error, info) {
+    console.error('Error Boundary:', error, info);
+  }
+  
+  render() {
+    if (this.state.hasError) {
+      return <h1>Something went wrong.</h1>;
+    }
+    return this.props.children;
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  </React.StrictMode>
+);
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Version Compatibility</h2>
+        <table>
+            <tr>
+                <th>react-scripts</th>
+                <th>React Version</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>5.0.1</td>
+                <td>17.x or 18.x</td>
+                <td class="success">✅ Recommended</td>
+            </tr>
+            <tr>
+                <td>5.0.1</td>
+                <td>19.x</td>
+                <td class="error">❌ Not officially supported</td>
+            </tr>
+            <tr>
+                <td>latest</td>
+                <td>18.x</td>
+                <td class="success">✅ Works</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="test-section">
+        <h2>💡 Next Steps</h2>
+        <ol>
+            <li>Try downgrading React to 18.2.0</li>
+            <li>Check browser console for errors</li>
+            <li>Test with a minimal App.js</li>
+            <li>Share any error messages you see</li>
+        </ol>
+        <p>With this information, I can help you fix the exact issue!</p>
+    </div>
+</body>
+</html>

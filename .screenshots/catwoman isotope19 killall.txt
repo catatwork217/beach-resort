@@ -1,0 +1,13 @@
+catwoman@isotope19:~$ killall node
+node: no process found
+catwoman@isotope19:~$ lsof -i :3000
+catwoman@isotope19:~$ killall node
+node: no process found
+catwoman@isotope19:~$ lsof -i :3000
+COMMAND      PID     USER   FD   TYPE   DEVICE SIZE/OFF NODE NAME
+MainThrea 233326 catwoman   21u  IPv4 50501357      0t0  TCP *:3000 (LISTEN)
+catwoman@isotope19:~$ pkill -f "react-scripts start"
+catwoman@isotope19:~$ lsof -i :3000
+COMMAND      PID     USER   FD   TYPE   DEVICE SIZE/OFF NODE NAME
+MainThrea 233326 catwoman   21u  IPv4 50501357      0t0  TCP *:3000 (LISTEN)
+

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Beach Resort Diagnostic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #333;
+        }
+        h1 { color: #2c3e50; }
+        h2 { color: #3498db; }
+        .error { color: #e74c3c; }
+        .success { color: #27ae60; }
+        .code {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        .section {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>🏖️ Beach Resort Diagnostic</h1>
+    
+    <div class="section">
+        <h2>🔍 Current Status</h2>
+        <p><strong>Your app is running:</strong> ✅ Development server is active</p>
+        <p><strong>Build status:</strong> ✅ No compilation errors</p>
+        <p><strong>Contentful connection:</strong> ✅ Successfully tested</p>
+        <p><strong>Data available:</strong> ✅ 1 home entry, 1 room entry, 8 images</p>
+    </div>
+
+    <div class="section">
+        <h2>❌ Why You See a Blank White Page</h2>
+        <p>The blank white page typically indicates one of these issues:</p>
+        
+        <h3>1. JavaScript Error in Browser</h3>
+        <ul>
+            <li>Open browser console (F12 → Console tab)</li>
+            <li>Look for red error messages</li>
+            <li>Common errors: undefined variables, network errors, syntax errors</li>
+        </ul>
+
+        <h3>2. React App Not Mounting</h3>
+        <ul>
+            <li>The <code>div#root</code> element is empty</li>
+            <li>This happens when React fails to render</li>
+            <li>Check console for <code>Uncaught Error</code> messages</li>
+        </ul>
+
+        <h3>3. Contentful Data Structure Mismatch</h3>
+        <ul>
+            <li>Your code expects <code>home.heroImage</code> but it might be null</li>
+            <li>Your code expects <code>room.images</code> but structure might differ</li>
+            <li>Check the debug logs in console</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>🔧 How to Debug</h2>
+        
+        <h3>Step 1: Open Browser Console</h3>
+        <ol>
+            <li>Press F12 or right-click → Inspect</li>
+            <li>Go to "Console" tab</li>
+            <li>Refresh the page (F5)</li>
+            <li>Look for error messages (red text)</li>
+        </ol>
+
+        <h3>Step 2: Check Debug Logs</h3>
+        <p>Look for these console.log messages:</p>
+        <div class="code">
+console.log('Home data:', homeData);<br>
+console.log('Rooms data:', response.items);<br>
+console.log('Room data:', roomData);
+        </div>
+        <p>If you see these logs, your app is working but data might be wrong.</p>
+        <p>If you DON'T see these logs, there's a JavaScript error preventing execution.</p>
+
+        <h3>Step 3: Check Network Tab</h3>
+        <ol>
+            <li>In browser dev tools, go to "Network" tab</li>
+            <li>Refresh the page</li>
+            <li>Look for failed requests (red status codes)</li>
+            <li>Check Contentful API calls (filter by "contentful")</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>💡 Common Fixes</h2>
+        
+        <h3>If you see: "Cannot read property 'fields' of undefined"</h3>
+        <p><strong>Fix:</strong> Your Contentful entry structure doesn't match expected format</p>
+        <ul>
+            <li>Go to Contentful and check your entry structure</li>
+            <li>Make sure you have a <code>home</code> entry with proper fields</li>
+            <li>Make sure your <code>room</code> entries have <code>slug</code>, <code>price</code>, <code>images</code></li>
+        </ul>
+
+        <h3>If you see: "TypeError: Cannot read property 'map' of undefined"</h3>
+        <p><strong>Fix:</strong> The <code>images</code> field is not an array or doesn't exist</p>
+        <ul>
+            <li>In Contentful, edit your room entry</li>
+            <li>Make sure <code>images</code> field is set to "Media" type, "multiple"</li>
+            <li>Add at least one image to the room</li>
+        </ul>
+
+        <h3>If console is completely empty</h3>
+        <p><strong>Fix:</strong> JavaScript bundle failed to load</p>
+        <ul>
+            <li>Check if <code>/static/js/bundle.js</code> exists</li>
+            <li>Try clearing browser cache (Ctrl+Shift+R)</li>
+            <li>Restart dev server: <code>npm start</code></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>📋 Your Current Data Structure</h2>
+        <p>Based on our API test, here's what Contentful is returning:</p>
+        
+        <h3>Home Entry:</h3>
+        <div class="code">
+{
+  "title": "Windy Coast Beach Resort for Everyone",
+  "description": "Amazing beach resort at the coast. Come check us out!",
+  "heroImage": null  // ← This is null! Add an image here
+}
+        </div>
+
+        <h3>Room Entry:</h3>
+        <div class="code">
+{
+  "title": "Ocean View Suite",
+  "slug": "room-ocean-view-suite",
+  "price": 299,
+  "description": "...",
+  "images": [
+    { "fields": { "file": { "url": "..." } } },
+    { "fields": { "file": { "url": "..." } } }
+  ]
+}
+        </div>
+
+        <p><strong>Note:</strong> Your home entry has no <code>heroImage</code>, so the hero section won't show.</p>
+    </div>
+
+    <div class="section">
+        <h2>🚀 Quick Fixes to Try</h2>
+        
+        <h3>1. Add a Hero Image</h3>
+        <ol>
+            <li>Go to: <a href="https://app.contentful.com/spaces/buu2xhmfxqzb" target="_blank">Contentful Space</a></li>
+            <li>Click "Content" → "home" entry</li>
+            <li>Upload an image to the "heroImage" field</li>
+            <li>Save and publish</li>
+            <li>Refresh your app</li>
+        </ol>
+
+        <h3>2. Check Browser Console</h3>
+        <p>Open console and look for errors. Share any error messages you see.</p>
+
+        <h3>3. Try Production Build</h3>
+        <div class="code">
+npm run build<br>
+npx serve -s build
+        </div>
+        <p>Then visit: <a href="http://localhost:5000" target="_blank">http://localhost:5000</a></p>
+
+        <h3>4. Clear Cache</h3>
+        <div class="code">
+# Stop dev server (Ctrl+C)
+rm -rf node_modules/.cache
+npm start
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📞 Need More Help?</h2>
+        <p>Please check your browser console and share:</p>
+        <ul>
+            <li>Any error messages (red text)</li>
+            <li>Whether you see the debug logs</li>
+            <li>Any network errors in the Network tab</li>
+        </ul>
+        <p>With this information, I can help you fix the exact issue!</p>
+    </div>
+</body>
+</html>

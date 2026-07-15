@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contentful Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .success { color: green; }
+        .error { color: red; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Contentful Connection Test</h1>
+    
+    <h2>Testing Your Contentful Setup</h2>
+    <p>This page helps you verify if your Contentful data is accessible.</p>
+    
+    <h3>Step 1: Check Your Contentful Space</h3>
+    <p>Go to: <a href="https://app.contentful.com/spaces/buu2xhmfxqzb" target="_blank">https://app.contentful.com/spaces/buu2xhmfxqzb</a></p>
+    
+    <h3>Step 2: Verify Content Types</h3>
+    <p>You should have these content types:</p>
+    <ul>
+        <li><strong>home</strong> - For homepage content (title, description, heroImage)</li>
+        <li><strong>room</strong> - For room listings (title, slug, price, description, images)</li>
+    </ul>
+    
+    <h3>Step 3: Upload Images</h3>
+    <p>In the Media section, upload your room images and link them to room entries.</p>
+    
+    <h3>Step 4: Expected Data Structure</h3>
+    <pre>
+// Home entry should look like:
+{
+  "title": "Welcome to Beach Resort",
+  "description": "Luxury beachfront accommodations",
+  "heroImage": {
+    "fields": {
+      "file": {
+        "url": "//images.ctfassets.net/.../image.jpg"
+      }
+    }
+  }
+}
+
+// Room entry should look like:
+{
+  "title": "Deluxe Ocean View",
+  "slug": "deluxe-ocean-view",
+  "price": 299,
+  "description": "Spacious room with ocean view...",
+  "images": [
+    {
+      "fields": {
+        "file": {
+          "url": "//images.ctfassets.net/.../room1.jpg"
+        }
+      }
+    }
+  ]
+}</pre>
+
+<h3>Step 5: Test Your App</h3>
+<p>Run these commands:</p>
+<pre>
+cd /home/catwoman/beach-resort
+npm start</pre>
+
+<p>Then visit: <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></p>
+
+<h3>Troubleshooting</h3>
+<p>If you see a blank page:</p>
+<ul>
+    <li>Open browser console (F12 → Console)</li>
+    <li>Check for errors</li>
+    <li>Look for the debug logs: <code>console.log('Home data:', homeData)</code></li>
+    <li>Verify Contentful is returning data</li>
+</ul>
+
+<h3>Common Issues</h3>
+<ul>
+    <li><strong>No content in Contentful</strong> → Create entries</li>
+    <li><strong>Wrong content type names</strong> → Use 'home' and 'room'</li>
+    <li><strong>Images not uploaded</strong> → Upload to Media section</li>
+    <li><strong>CORS errors</strong> → Check Contentful API settings</li>
+</ul>
+
+</body>
+</html>
