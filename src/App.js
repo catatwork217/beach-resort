@@ -3,8 +3,10 @@ import './App.css';
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Rooms from "./pages/Rooms";
-import SingleRoom from "./pages/SingleRoom";
+import Home from "./";
+import Rooms from "./pages/room-queen";
+import Rooms from "./pages/room-king";
+import Rooms from "./pages/room-suite";
 import Error from "./pages/Error";
 
 
