@@ -9,7 +9,7 @@ Your React app is now properly configured to fetch data from Contentful. This gu
 ```javascript
 // src/contentful.js
 space: 'buu2xhmfxqzb'
-accessToken: 'qTl-U1v_zp-MQY1zJ9CwuXVFyukybrz0A37CzllzJc0'
+accessToken: 'YOURACCESSTOKEN'
 ```
 
 **Space URL:** [https://app.contentful.com/spaces/buu2xhmfxqzb](https://app.contentful.com/spaces/buu2xhmfxqzb)
