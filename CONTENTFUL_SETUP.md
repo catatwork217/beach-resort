@@ -8,11 +8,10 @@ Your React app is now properly configured to fetch data from Contentful. This gu
 
 ```javascript
 // src/contentful.js
-space: 'buu2xhmfxqzb'
+space: 'YOURCONTENTFULSPACEID'
 accessToken: 'YOURACCESSTOKEN'
 ```
 
-**Space URL:** [https://app.contentful.com/spaces/buu2xhmfxqzb](https://app.contentful.com/spaces/buu2xhmfxqzb)
 
 ## 📋 Step 1: Create Content Types
 
