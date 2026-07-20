@@ -108,7 +108,7 @@ cd /home/catwoman/beach-resort
 npm start
 ```
 
-Visit: [http://localhost:3000](http://localhost:3000)
+<!-- Your dev environment will be accessible through the following localhost [http://localhost:3000](http://localhost:3000) -->
 
 ### What to Check:
 
